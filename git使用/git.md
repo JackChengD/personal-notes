@@ -43,5 +43,5 @@
 >- git pull origin master 从远程分支master上下载
 >- git clone "http:......." 克隆远程master分支
 >- git clone -b dev "http:......" 克隆远程dev分支
-
+>- git checkout -b develop origin/develop 本地拉取显示的develop分支代码
 
