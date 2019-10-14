@@ -1,6 +1,6 @@
 # node学习
 ## 简介
->- 事件驱动、非阻塞、性能高、单线程、异步、IO。生态圈很好，有很多npm包。 
+>- 事件驱动、非阻塞、性能高、单线程、异步IO。生态圈很好，有很多npm包。 
 
 ### 事件
 ```javascript
@@ -129,7 +129,33 @@ myReadStream.on('end',function(){
 ```
 
 ### 路由
+```javascript
+var http = require('http');
+var fs = require('fs');
 
+function startServer() {
+    var server = http.createServer(function (request, response) {
+        console.log('Request receoved' + request.url);
+        if (request.url === '/' || request.url === '/a') {
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.createReadStream(__dirname + '/a.html', 'utf8').pipe(response)
+        } else {
+            response.writeHead(200, { 'Content-Type': 'text/json' });
+            var obj = {
+                name: 'xiaohu',
+                age: 18
+            }
+            response.end(JSON.stringify(obj))
+        }
+
+    })
+    server.listen(3000, '127.0.0.1');//监听3000端口 
+}
+
+exports.startServer = startServer;
+//cnpm install nodemon -g 
+//nodemon在文件发生变化后，会自动重新启动
+```
 
 
 

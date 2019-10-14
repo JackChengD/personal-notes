@@ -27,6 +27,7 @@
 >- git diff HEAD -- `<filename>` ("--"前后有空格，可以查看工作区和版本库里面最新版本的区别)
 >- git reset --hard HEAD^ 回退一步
 >- git reset --hard HEAD^^^ 回退三步
+>- git reflog 查看操作
 >- git reflog filename 查看详细的操作
 >- git reset --hard 43ea01 将版本回退到43ea01时的版本
 >- git reset --hard HEAD~3 回退三步

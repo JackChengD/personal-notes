@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../public/css/basic.css">
+</head>
+
+<body>
+    <h2>新闻页面--<%=msg%></h2>
+    <h2>用户姓名--<%=user.name%></h2>
+    <h2>用户年龄--<%=user.age%></h2>
+    <ul>
+        <%for(let i=0;i<list.length;i++){%>
+        <li><%=list[i]%></li>
+        <%}%>
+    </ul>
+</body>
+
+</html>
