@@ -8,10 +8,9 @@ class NewsController extends Controller {
         await this.ctx.render('news', { list })
     }
     async content() {
-        var aid = this.ctx.query;
-
+        var aid = this.ctx.query.aid;
         let list = await this.service.news.getNewsContent(aid);
-        await this.ctx.render('newscontent', { list })
+        await this.ctx.render('newscontent', { list: list[0] })
     }
 }
 

@@ -6,7 +6,7 @@ class NewsService extends Service {
     async getNewsList() {
         //通过抓取接口返回数据
         //curl的方法可以获取远程的数据
-        let api = 'http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1'
+        let api = this.app.getUrl() + 'appapi.php?a=getPortalList&catid=20&page=1'
         let response = await this.ctx.curl(api)
         // console.log(response.data);//buffer类型
         var data = JSON.parse(response.data)
@@ -15,7 +15,7 @@ class NewsService extends Service {
     async getNewsContent(aid) {
         //通过抓取接口返回数据
         //curl的方法可以获取远程的数据
-        let api = 'http://www.phonegap100.com/appapi.php?a=getPortalList&aid=' = aid
+        let api = this.app.getUrl() + 'appapi.php?a=getPortalArticle&aid=' + aid
         let response = await this.ctx.curl(api)
         // console.log(response.data);//buffer类型
         var data = JSON.parse(response.data)

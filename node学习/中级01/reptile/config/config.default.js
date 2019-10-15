@@ -16,7 +16,13 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1571039580628_414';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['printdate', 'forbidip'];
+  config.printdate = {
+    a: '132321 '
+  }
+  config.forbidip = {
+    forbidip: ['127.0.0.1', '192.168.10.201']
+  }
 
   // add your user config here
   const userConfig = {
