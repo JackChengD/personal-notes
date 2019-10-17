@@ -4,7 +4,7 @@ const { app, assert } = require('egg-mock/bootstrap');
 
 describe('test/app/controller/home.test.js', () => {
   it('should assert', () => {
-    const pkg = require('../../../package.json');
+    const pkg = require('../../../package.json.js');
     assert(app.config.keys.startsWith(pkg.name));
 
     // const ctx = app.mockContext({});

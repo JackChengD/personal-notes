@@ -9,7 +9,7 @@
 >- 便于协作
 >- 便于使用分支
 >- 版本合并容易
->- 速度块
+>- 速度快
 >- 灵活性高
 
 ### git的常见命令
@@ -45,4 +45,4 @@
 >- git clone "http:......." 克隆远程master分支
 >- git clone -b dev "http:......" 克隆远程dev分支
 >- git checkout -b develop origin/develop 本地拉取显示的develop分支代码
-
+>- git commit --amend 修改已提交的commit注释
