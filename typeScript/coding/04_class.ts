@@ -133,7 +133,6 @@
 //         this.name = name
 //     }
 // }
-
 // class Employee extends Person {
 //     private compony: string
 //     constructor(name: string, compony: string) {
@@ -144,11 +143,27 @@
 //         return `我叫${this.name},我在${this.compony}`
 //     }
 // }
-
 // let p = new Employee('科比', 'NBA');
 // p.name;//报错，name为受保护类型，只能在Person中访问,其子类中访问
 // console.log(p.logMsg())
 
+// class Person {
+//     protected name: string;
+//     protected constructor(theName: string) { this.name = theName; }
+// }
+// // Employee 能够继承 Person
+// class Employee extends Person {
+//     private department: string;
+//     constructor(name: string, department: string) {
+//         super(name);
+//         this.department = department;
+//     }
+//     public getElevatorPitch() {
+//         return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+//     }
+// }
+// let howard = new Employee("Howard", "Sales");
+// let john = new Person("John"); // 错误: 'Person' 的构造函数是被保护的.
 
 //静态属性--只有自己才能访问
 // class Company {
