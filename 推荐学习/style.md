@@ -5,11 +5,11 @@
 2. jquery：https://jquery.com/
 3. scss：https://www.sass.hk/
 4. less：http://lesscss.cn/
-5.  stylus：https://stylus.bootcss.com/
-6.  阮一峰的es6：http://es6.ruanyifeng.com/
-7.  vue：https://cn.vuejs.org/v2/guide/
-8.  react：https://react.docschina.org/
-9.  angular：https://angular.cn/
+5. stylus：https://stylus.bootcss.com/
+6. 阮一峰的es6：http://es6.ruanyifeng.com/
+7. vue：https://cn.vuejs.org/v2/guide/
+8. react：https://react.docschina.org/
+9. angular：https://angular.cn/
 10. webpack：http://webpack.github.io/
 11. axios：http://www.axios-js.com/
 12. node：http://nodejs.cn/
