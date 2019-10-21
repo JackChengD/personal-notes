@@ -9,7 +9,7 @@
 >- 便于协作
 >- 便于使用分支
 >- 版本合并容易
->- 速度块
+>- 速度快
 >- 灵活性高
 
 ### git的常见命令
@@ -27,6 +27,7 @@
 >- git diff HEAD -- `<filename>` ("--"前后有空格，可以查看工作区和版本库里面最新版本的区别)
 >- git reset --hard HEAD^ 回退一步
 >- git reset --hard HEAD^^^ 回退三步
+>- git reflog 查看操作
 >- git reflog filename 查看详细的操作
 >- git reset --hard 43ea01 将版本回退到43ea01时的版本
 >- git reset --hard HEAD~3 回退三步
@@ -46,5 +47,5 @@
 >- git branch -b dev 删除本地分支
 >- git clone -r -d origin/dev
    git push origin :dev    删除远程分支
-
-
+>- git checkout -b develop origin/develop 本地拉取显示的develop分支代码
+>- git commit --amend 修改已提交的commit注释，在vi编辑器改
