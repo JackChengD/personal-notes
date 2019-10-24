@@ -20,7 +20,7 @@
 >- scaffolds：生成文章的一些模板
 >- source：用来存放你的文章
 >- themes：主题
->- **_config：博客的配置文件
+>- _config.yml：博客的配置文件
 
 7.hexo g
 
@@ -29,7 +29,8 @@
 9.git创建个人仓库，命名为xxx.github.io，其中xxx是你注册GitHub的用户名
 
 10.将hexo部署到github
-```yml
+>- 在_config.yml文件
+```yml   
     deploy:
         type: git
         repository: git@github.com:JackChengD/JackChengD.github.io.git
