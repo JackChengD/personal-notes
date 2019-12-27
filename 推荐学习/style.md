@@ -24,4 +24,7 @@
 21. 菜鸟教程：https://www.runoob.com/
 22. leetcode：https://leetcode-cn.com/
 23. 牛客网：https://www.nowcoder.com/
-24. 
+24. java：https://www.liaoxuefeng.com/wiki/1252599548343744
+25. sql：https://www.runoob.com/sql/sql-tutorial.html
+26. commonJs：http://www.w3cbus.com/nodejs/module.html#toc12
+27. 浏览器兼容：http://www.w3cbus.com/nodejs/module.html#toc12
