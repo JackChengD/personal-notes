@@ -47,7 +47,7 @@ where url like '%oo%';
 select * from style 
 where name like '_oogle';
 
-//在style表中查看name以g/F/百开头的所有字段
+//在style表中查看name以g/F/百开头的所有字段，不区分大小写
 select * from style 
 where name regexp '^[gF百]';
 
@@ -62,6 +62,9 @@ where name regexp '^[^A-H百]';
 //在style表中查看name为google或者百度的所有字段
 select * from style 
 where name in ('google','百度');
+
+//在style表中查看name为google的所有字段，binary区分大小写
+select * from style where binary name='google';
 
 //在style表中查看id范围在2到10，包含2和10
 select * from style 
@@ -171,13 +174,133 @@ select *, now() as date from style;
 //查看style表的所有字段和当前格式化的时间
 select *, date_format(now(), '%Y-%m-%d') as date from style;
 
+```
+
+### 例子
+#### 举例1
+```sql
+//创建表
+create table if not exists score(sname varchar(10), cname varchar(5),grade integer) charset=utf8;
+insert into score(sname,cname,grade)
+values ('张三','数学',80),
+       ('张三','语文',90),
+       ('张三','英语',70),
+       ('张三','物理',60),
+       ('李四','数学',66),
+       ('李四','语文',60),
+       ('李四','英语',80),
+       ('李四','物理',90),
+       ('刘志麟','语文',99),
+       ('刘志麟','数学',50),
+       ('刘志麟','英语',50),
+       ('刘志麟','物理',89),
+       ('罗宇航','语文',99),
+       ('罗宇航','数学',80),
+       ('罗宇航','物理',78),
+       ('罗宇航','英语',96),
+       ('许振东','数学',96),
+       ('许振东','语文',96),
+       ('许振东','英语',96),
+       ('许振东','物理',96);
+
+# 1. 查询90分以上的学生的课程名和成绩
+select * from score
+where grade > 90;
+
+# 2. 查询每个学生的成绩在90分以上的各有多少门
+select sname, count(cname) from score
+where grade > 90
+group by sname
+having count(cname);
+
+# 3. 至少有两门课程在90分以上的学员以及90分以上的课程数 
+select sname,count(cname) from score
+where grade > 90
+group by sname
+having count(cname) > 2;
+
+# 4. 平均成绩比张三的平均成绩高的学员和其平均分
+select sname,avg(grade) from score
+group by sname
+having avg(grade) > (select avg(grade) from score where sname = '张三');
+
+# 5. 查询平均成绩大于90分并且语文课95分以上的学生名和平均成绩
+select sname,avg(grade) from score
+where sname in (select sname from score
+where cname = '语文' and grade > 95)
+group by sname
+having avg(grade) > 90;
+
+# 6. 查询每个学员的平均分和学生名
+select sname,avg(grade) from score
+group by sname;
+
+# 7. 查询每门课的最好成绩和平均分
+select max(grade),avg(grade) from score
+group by sname;
+
+# 8. 查询数学课成绩最好的学员的所有成绩
+select * from score
+where sname in (select sname from score
+where grade = (select max(grade) from score where cname = '数学')and cname = '数学');
+
+# 9. 查询学员及其总分,按总分降序排列
+select sname,sum(grade) from score
+group by sname
+order by sum(grade) desc;
 
 ```
 
+#### 举例2
+```sql
+//建表
+create table if not exists employee(eid integer auto_increment primary key,name varchar(5),age integer,salary integer,depart varchar(5),workage integer) charset=utf8;
+insert into employee (name,age,salary,depart,workage)
 
+values ('崔铭','25',1500,'研发部',3),
+       ('佳伟','23',1000,'市场部',2),
+       ('刘涵','30',10600,'人事部',6),
+       ('孙铭泽','25',2000,'运营部',5),
+       ('张吉龙','21',15000,'生产部',12),
+       ('从好平','22',1500,'质量部',3),
+       ('杨忠','22',5000,'财务部',4),
+       ('芦淞','24',6000,'采购部',7),
+       ('马玉','25',450000,'销售部',29),
+       ('成林','21',12000,'安全部',10),
+       ('张龙','32',17000,'研发部',21),
+       ('王建业','25',11000,'研发部',7),
+       ('王佳敏','22',10000,'市场部',9),
+       ('姜佳伟','27',10000,'人事部',13),
+       ('王国栋','20',10012,'研发部',2),
+       ('周昌洋','38',10560,'研发部',1),
+       ('刘鑫鑫','18',1900,'人事部',6),
+       ('刘博','21',2000,'研发部',11),
+       ('乔鑫','19',13000,'运营部',12),
+       ('宇航','20',10500,'生产部',21),
+       ('赵浩然','33',10400,'总经理',21),
+       ('常盛','24',1000,'生产部',2),
+       ('刘麟','25',3000,'武装部',8);
 
+# 1. 查询每个部门的总薪资
+select depart,sum(salary) from employee
+group by depart;
 
+# 2. 员工数超过3人的部门的最高薪资和最低薪资
+select depart,max(salary),min(salary) from employee
+group by depart
+having count(*) > 3;
 
+# 3. 工龄超过3年的员工中,薪资最低的所有员工信息
+select * from employee
+where salary in (select min(salary) from employee where workage > 3);
+
+# 4. 工龄超过3年的员工数大于3的部门
+select depart,count(*) from employee
+where workage > 3
+group by depart
+having count(*) > 3;
+
+```
 
 
 
