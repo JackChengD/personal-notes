@@ -35,9 +35,9 @@
 >- git rm -f filename 删除filename
 >- git branch -D filename 删除filename
 >- git branch dev 新建dev分支
->- git checkout dev 切换到dev分支
+>- git checkout dev / git switch dev 切换到dev分支
 >- git merge dev 将dev分支和当前分支合并
->- git checkout -b dev 新建dev分支并切换
+>- git checkout -b dev / git switch -c dev 新建dev分支并切换
 >- git remote add origin "http:......" 远程添加
 >- git push -u origin master 将本地的项目推送到master分支（第一次）
 >- git push 将本地的项目推送到master分支
@@ -49,3 +49,6 @@
    git push origin :dev    删除远程分支
 >- git checkout -b develop origin/develop 本地拉取显示的develop分支代码
 >- git commit --amend 修改已提交的commit注释，在vi编辑器改
+>- git stash 保存工作现场
+>- git stash pop 恢复工作现场
+
