@@ -49,6 +49,9 @@
    git push origin :dev    删除远程分支
 >- git checkout -b develop origin/develop 本地拉取显示的develop分支代码
 >- git commit --amend 修改已提交的commit注释，在vi编辑器改
->- git stash 保存工作现场
->- git stash pop 恢复工作现场
-
+>- git stash 能够将所有未提交的修改（工作区和暂存区）保存至堆栈中，用于后续恢复当前工作目录
+>- git stash pop 恢复之前缓存的工作目录，将缓存堆栈中的对应stash删除，并将对应修改应用到当前的工作目录下，默认为第一个stash，即stash@{0}，如果要应用并删除其他stash，命令：git stash pop stash@{$num},比如应用并删除第二个：git stash pop stash@{1}
+>- git stash list 查看stash了哪些存储
+>- git stash show 显示做了哪些改动，默认show第一个存储，如果要显示其他存贮，后面加stash@{$num}，比如第二个git stash show stash@{1}
+>- git stash drop stash@{$num} 丢弃stash@{$num}存储，从列表中删除这个存储
+>- git stash clear 删除所有缓存的stash
