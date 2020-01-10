@@ -37,7 +37,7 @@
 >- git branch dev 新建dev分支
 >- git checkout dev / git switch dev 切换到dev分支
 >- git merge dev 将dev分支和当前分支合并
->- git merge --no--ff dev -no-ff禁止了快进，会生成一个新的提交(建议使用这种方式合并代码)
+>- git merge --no-ff dev -no-ff禁止了快进，会生成一个新的提交(建议使用这种方式合并代码)
 >- git checkout -b dev / git switch -c dev 新建dev分支并切换
 >- git remote add origin "http:......" 远程添加
 >- git push -u origin master 将本地的项目推送到master分支（第一次）
