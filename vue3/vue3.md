@@ -1,11 +1,11 @@
 # Vue3
 
 ## 特点
-> 更快
-> 更小
-> 更易于维护
-> 更多的原生支持
-> 更易于开发使用
+> 更快  
+> 更小  
+> 更易于维护  
+> 更多的原生支持  
+> 更易于开发使用  
 
 ## 让Vue更快
 ### 重写虚拟DOM(Virtual DOM Rewrite)
@@ -44,3 +44,50 @@
 ### 实验性的Time Slicing支持
 > 当您有许多组件同时尝试重新渲染时，任何浏览器都可以开始变的很慢，从而使用户体验下降  
 > Evan展示了他如何尝试使用Time Slicing，将JS的执行分解为几个部分，如果有用户需要处理，这些部分将提供给浏览器
+
+## 参考
+> https://vue-composition-api-rfc.netlify.com/#basic-example
+
+## 组件中的用法
+```html
+<template>
+  <button @click="increment">
+    Count is: {{ state.count }}, double is: {{ state.double }}
+  </button>
+</template>
+
+<script>
+import { reactive, computed, onMounted, watch } from 'vue'
+
+export default {
+  //setup相当于vue的beforeCreate+created
+  //reactive相当于data数据
+  setup() {
+    //ref一般定义基本类型，reactive定义引用类型
+    //参考：https://www.jianshu.com/p/db5b8a9ec966
+    const state = reactive({
+      count: 0,
+      double: computed(() => state.count * 2)
+    })
+    const x = ref(0);//
+
+    //生命周期钩子只能在setup调用，vue3写法在开头加了个on
+    onMounted(() => {
+      console.log('component is mounted!')
+    })
+
+    watch(() => console.log(state.count))
+
+    function increment() {
+      state.count++
+    }
+
+    return {
+      state,
+      increment
+    }
+  }
+}
+</script>
+
+```
