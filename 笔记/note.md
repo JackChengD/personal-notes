@@ -16,6 +16,11 @@ body .el-table colgroup.gutter{
 img{
     display: block
 }
+
+3.iOS、android的软键盘弹起问题
+> IOS下中，软键盘处于窗口最顶层，与原有的窗口不冲突，所以底部导航条不会被顶起，但是在android下，软键盘与窗口处于同一层，所以当软键盘弹起时，当前窗口缩小，那么窗口内容自然要被挤  
+> iOS是覆盖在上面，Android是顶起页面
+
 ```
 
 
