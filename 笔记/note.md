@@ -119,3 +119,73 @@ img{
 
 ```
 
+### 8. 时间倒计时(vue)
+```html
+  <div id="countDown" class="p-2">
+    <span class="span-1">距结束</span>
+    <span class="span-2">--</span>
+    <span class="span-1">天</span>
+    <span class="span-2">--</span>
+    <span class="span-1">:</span>
+    <span class="span-2">--</span>
+    <span class="span-1">:</span>
+    <span class="span-2">--</span>
+  </div>
+```
+
+```js
+//倒计时
+    countdown() {
+      let time = setInterval(() => {
+        let timenow = new Date();
+        let time2020 = new Date(2020, 1, 9, 18, 0, 0); //指定时间
+        //     参数说明：
+        // 　　year的值为：需设定的年份-1900。例如需设定的年份是1997则year的值应为97，即1997-1900的结果。所以Date中可设定的年份最小为1900；
+        // 　　month的值域为0～11，0代表1月，11表代表12月；
+        // 　　date的值域在1～31之间；
+        // 　　hrs的值域在0～23之间。从午夜到次日凌晨1点间hrs=0，从中午到下午1点间hrs=12；
+        // 　　min和sec的值域在0～59之间。
+        let cz = time2020.getTime() - timenow.getTime();
+        // if (cz < 0) {
+        //   clearInterval(time);
+        // }
+        let day = parseInt(cz / (24 * 60 * 60 * 1000));
+        cz = cz % (24 * 60 * 60 * 1000);
+        let hours = parseInt(cz / (60 * 60 * 1000));
+        cz = cz % (60 * 60 * 1000);
+        let minute = parseInt(cz / (60 * 1000));
+        cz = cz % (60 * 1000);
+        let second = parseInt(cz / 1000);
+
+        let span = document
+          .getElementById("countDown")
+          .getElementsByClassName("span-2");
+        // console.log(span);
+        span[0].innerHTML = this.timeFilter(day);
+        span[1].innerHTML = this.timeFilter(hours);
+        span[2].innerHTML = this.timeFilter(minute);
+        span[3].innerHTML = this.timeFilter(second);
+        if (second <= -1) {
+          //如果溢出就为0并清除定时器
+          span[0].innerHTML = '00';
+          span[1].innerHTML = '00';
+          span[2].innerHTML = '00';
+          span[3].innerHTML = '00';
+          clearInterval(time);
+        }
+      }, 1000);
+    },
+    timeFilter(item) {
+      if (item < 10) {
+        return "0" + item;
+      } else {
+        return item;
+      }
+    },
+
+```
+
+
+
+
+
