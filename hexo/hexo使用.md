@@ -8,7 +8,7 @@
 
 2.安装node
 
-3.安装hexo(npm install -g hexo-cli)
+3.安装hexo(npm install hexo --save、npm install -g hexo-cli)
 
 4.初始化项目(hexo init myblog)---耐心等候
 
