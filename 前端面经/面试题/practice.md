@@ -25,7 +25,7 @@ console.log(fn(arr));
 
 const fn = function(arr) {
     for(let i=1;i<arr.length;i++) {
-        for(j = i;j>0;j--) {
+        for(let j = i;j>0;j--) {
             if(arr[j-1]> arr[j]) {
                 [arr[j-1], arr[j]] = [arr[j], arr[j-1]]
             }
@@ -108,15 +108,17 @@ const debounce = function(fn, delay = 1000) {
     }
 }
 
-const throttle = function (fn, delay) {
+const throttle = function(fn, delay = 1000) {
     let flag = true;
     return function() {
         if(!flag) return;
         flag = false;
+        let self =this;
+        let args = [...arguments];
         setTimeout(()=>{
-            fn.apply(this);
+            fn.apply(self, args);
             flag = true;
-        }, delay)
+        }, delay);
     }
 }
 
@@ -131,7 +133,7 @@ const myNew = function(fn) {
     }
 }
 
-const myFlag = function(arr) {
+const myFlat = function(arr) {
     return arr.reduce((prev, cur) => {
         return Array.isArray(cur) ? prev.concat(myFlat(cur)) : prev.concat(cur);
     }, []);
@@ -206,7 +208,7 @@ sleep(1000).then(()=>{
     console.log(111);
 })
 
-function myTrim(str) {
+const myTrim = function(str) {
     return str.replace(/(^\s*) | (\s*$)/g, '');
 }
 
@@ -330,9 +332,9 @@ Person.prototype.sayHi = function() {
     console.log(this.name);
 }
 
-function Student(name, age, class) {
+function Student(name, age, weight) {
     Person.call(this, name, age);
-    this.class= class;
+    this.weight= weight;
 }
 
 Student.prototype = new Person();
@@ -479,5 +481,27 @@ sub.add(john);
 sub.notify();
 sub.remove(jack);
 sub.notify();
+
+
+class Bus {
+    constructor() {
+        this.callbacks = {};
+    }
+    $on(name, fn) {
+        this.callbacks[name] = this.callbacks[name] || [];
+        this.callbacks[name].push(fn);
+    }
+    $emit(name) {
+        let args = [...arguments].slice(1)
+        if(this.callbacks[name]) {
+            this.callbacks[name].forEach(cb => cb(args));
+        }
+    }
+    $off(name) {
+        if(this.callback[name]) {
+            delete this.callback[name];
+        }
+    }
+}
 
 ```

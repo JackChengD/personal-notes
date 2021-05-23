@@ -4,8 +4,8 @@
 webpack可以把不同模块的文件进行打包，并且保证它们的引用正确，执行有序。
 
 首先读取webpack的配置参数，启动webpack创建Compiler对象并开始解析项目，会根据entry找到打包的入口文件将其进行编译，最终生成依赖关系树，  
-webpack默认只认识js文件，所以当打包文件中存在非js文件时，需要引入loader进行转换，loader的解析是从上往下，从右往左（style-loader(css-loader(less-loader(content)))）进行的，比如vue文件需要使用vue-loader、scss文件需要使用scss-loader、css-loader、style-loader等让webpack最终能够认识它们并解析，  
-在webpack打包的构成中会通过发布订阅模式抛出一些hooks，我们可以使用plugins去监听这些hooks，在做对应的功能扩展，比如使用CopyWebpackPlugin将静态置换文件赋值到dist下面，按需引入、代码压缩（UglifyJsPlugin）、热加载、一些错误提示等。  
+webpack默认只认识js文件，所以当打包文件中存在非js文件时，需要引入loader进行解析，loader的解析是从上往下，从右往左（style-loader(css-loader(less-loader(content)))）进行的，比如vue文件需要使用vue-loader、scss文件需要使用scss-loader、css-loader、style-loader等让webpack最终能够认识它们并解析，  
+在webpack打包的构成中会通过发布订阅模式抛出一些hooks，我们可以使用plugins去监听这些hooks，在做对应的功能扩展，比如使用CopyWebpackPlugin将静态资源文件赋值到dist下面，按需引入、代码压缩（UglifyJsPlugin）、热加载（HotModuleReplacementWebpack）、一些错误提示（friendlyErrorsWebpack）等。  
 webpack终于会根据output确定打包的出口目录、文件格式（hash）。  
 
 参考：https://mp.weixin.qq.com/s/bsZ3WcGFdYrGi0jXbhYl2A  
