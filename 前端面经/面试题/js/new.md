@@ -12,14 +12,12 @@
 
 ```js
     function _new(fn) {
-        return function() {
-            var obj = {
-                __proto__: fn.prototype
-            };
-            var args = [...arguments];
-            fn.apply(obj, args);
-            return obj;
-        }
+      let obj = {
+        __proto__: fn.prototype
+      }
+      let args = [...arguments].slice(1);
+      let result = fn.apply(obj, args);
+      return result instanceof Object ? result : obj;
     }
     function person(name, age) {
       this.name = name;
@@ -28,7 +26,7 @@
     person.prototype.sayHi = function () {
       console.log(this.name)
     }
-    let obj = _new(person)('小米', 14);
+    let obj = _new(person, '小米', 14);
     obj.sayHi();//小米
     console.log(obj);
     // person {name: "小米", age: 14}
@@ -39,3 +37,5 @@
     // constructor: ƒ person(name, age)
     // __proto__: Object
 ```
+
+参考： https://juejin.cn/post/6964911188849197092  

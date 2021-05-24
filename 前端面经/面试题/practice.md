@@ -123,14 +123,12 @@ const throttle = function(fn, delay = 1000) {
 }
 
 const myNew = function(fn) {
-    return function() {
-        let obj = {
-            __proto__: fn.prototype
-        }
-        var args = [...arguments];
-        fn.apply(obj, args);
-        return obj;
+    let obj = {
+      __proto__: fn.prototype
     }
+    let args = [...arguments].slice(1);
+    let result = fn.apply(obj, args);
+    return result instanceof Object ? result : obj;
 }
 
 const myFlat = function(arr) {
