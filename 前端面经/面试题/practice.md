@@ -389,7 +389,7 @@ function fn() {
 const fn = function(str) {
     let result = '';
     while(str.length>3) {
-        result += ',' + str.slice(-3);
+        result = ',' + str.slice(-3) + result;
         str = str.slice(0, -3);
     }
     if(str) {
@@ -501,5 +501,73 @@ class Bus {
         }
     }
 }
+
+
+/**
+  数组旋转90度
+  解法是先对角交换，再逆序
+  [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, 16]
+  ]
+
+  =>
+
+  [
+    [1, 5, 9, 13],
+    [2, 6, 10, 14],
+    [3, 7, 11, 15],
+    [4, 8, 12, 16]
+  ]
+
+  =>
+
+  [
+    [13, 9, 5, 1],
+    [14, 10, 6, 2],
+    [15, 11, 7, 3],
+    [16, 12, 8, 4]
+  ]
+**/
+
+const fn = function(arr) {
+    let x = arr.length;
+    let y = arr[0].length;
+
+    for(let i=0;i<x;i++){
+        for(let j=i;j<y;j++) {
+            [arr[i][j], arr[j][i]] = [arr[j][i], arr[i][j]]
+        }
+    }
+
+    for(let i=0;i<x;i++) {
+        for(let j=0;j<y/2;j++) {
+            [arr[i][j], arr[i][y-j-1]] = [arr[i][y-j-1], arr[i][j]];
+        }
+    }
+}
+
+console.log(fn([[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+
+/**
+  乱序数组中找比左边都小比右边都大的数
+**/
+const fn = function(arr) {
+    let result = [];
+    for(let i = 1;i<arr.length-1;i++) {
+        const leftArr = arr.slice(0, i);
+        const rightArr = arr.slice(i+1);
+        const leftMax = Math.max(...leftArr);
+        const rightMin = Math.min(...rightArr);
+        if(arr[i]>leftMax && arr[i]< rightMin) {
+            result.push(i);
+        }
+    }
+    return result;
+}
+
+console.log(fn([1,2,3,4,5,6]))
 
 ```
