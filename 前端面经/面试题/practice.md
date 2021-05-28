@@ -87,7 +87,7 @@ let arr = [1,2,34,6,6,2,4,3,7,4];
 console.log(fn(arr));
 
 
-let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXOject('Microsoft.XMLHTTP');
+let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 xhr.open('url', get, true);
 xhr.send();
 xhr.onreadystatechange = function() {
@@ -553,21 +553,99 @@ console.log(fn([[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
 
 /**
   乱序数组中找比左边都小比右边都大的数
+  两次遍历，记录左边最大值，右边用新数组记录每个点（从右往左）的最小值
+  从右往左找，找到每个位置的最小值并记录起来
+  从左往右找，当前值大于左边最大值，更新左边最大值，再看当前值是否小于（右边过来的数组）索引下一个小
+  如果是，那么当前是就是比左边都小比右边都大的数
 **/
 const fn = function(arr) {
-    let result = [];
-    for(let i = 1;i<arr.length-1;i++) {
-        const leftArr = arr.slice(0, i);
-        const rightArr = arr.slice(i+1);
-        const leftMax = Math.max(...leftArr);
-        const rightMin = Math.min(...rightArr);
-        if(arr[i]>leftMax && arr[i]< rightMin) {
-            result.push(i);
-        }
+  let result = [];
+  let arrLen = arr.length;
+  let leftMax = arr[0];
+  let rightMin = arr[arrLen-1];
+  let rightArr = new Array(arrLen);
+
+  for(let i=arrLen-1;i>=0;i--) {
+    if(arr[i] < rightMin) {
+      rightMin = arr[i];
+    }
+    rightArr[i] = rightMin;
+  }
+
+  // 第一个和最后一个不用看
+  for(let i=1;i<arrLen-1;i++) {
+    if(arr[i]>leftMax) {
+      leftMax = arr[i];
+      if(arr[i] < rightArr[i+1]) {
+        result.push(arr[i])
+      }
+    }
+  }
+
+  return result;
+}
+
+console.log(fn([1,2,3,7,4,5,6]))
+
+// 题源：https://leetcode-cn.com/circle/discuss/q5wVRM/
+
+/**
+  num是否为source的倍数或者包含source
+**/
+const fn = function(num, source) {
+  if(num % source === 0) return true;
+  let numStr = num + '';
+  if(numStr.indexOf(source)> -1) return true;
+  return false
+}
+
+/**
+  生成n到m的随机数
+**/
+
+const fn = function(n, m) {
+  return Math.floor(Math.random()*(m - n + 1)) + n;
+}
+
+console.log(fn(3, 7));
+
+const fn = function(num, source) {
+    if(num % source === 0) return true;
+    num +='';
+    if(num.indexOf(source)>-1) return true;
+    return false;
+}
+
+console.log(fn(3, 7));
+
+const fn = function(num) {
+    let result = 0;
+    while(num!==0) {
+        num&=num-1;
+        result++;
     }
     return result;
 }
 
-console.log(fn([1,2,3,4,5,6]))
+function fn(array, id, pid) {
+    let map = {};
+    let result = {};
+    for(let i=0;array.length;i+) {
+        map[array[i].id] = array[i];
+    }
+
+    array.forEach(item => {
+        const parent = map[item.pid];
+        if(parent) {
+            if(!parent.children) {
+                parent.children = []
+            }
+            parent.children.push(item)
+        } else {
+            result = item;
+        }
+    })
+    return result;
+}
 
 ```

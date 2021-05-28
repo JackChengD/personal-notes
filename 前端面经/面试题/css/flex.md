@@ -37,3 +37,13 @@ flex-shrink属性定义了项目的缩小比例，默认为`1`，即如果空间
 200 - 85.71 = 114.29px
 
 收缩情况参考： https://blog.csdn.net/guoqiankunmiss/article/details/103522934
+
+## flex:n
+
+flex:n
+
+=>
+
+flex-grow: n;
+flex-shrink: 1;
+flex-basic: 0%;
