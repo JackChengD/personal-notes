@@ -230,7 +230,7 @@ const myAll = function(promises) {
                 }
             }).catch(err => {
                 reject(err);
-            }])
+            })
         })
     })
 }
@@ -496,8 +496,8 @@ class Bus {
         }
     }
     $off(name) {
-        if(this.callback[name]) {
-            delete this.callback[name];
+        if(this.callbacks[name]) {
+            delete this.callbacks[name];
         }
     }
 }
@@ -649,3 +649,480 @@ function fn(array, id, pid) {
 }
 
 ```
+
+
+```js
+const fn = function(arr) {
+    for(let i =0;i<arr.length;i++) {
+        for(let j = i+1;j<arr.lengtj;j++) {
+            if(arr[i] > arr[j]) {
+                [arr[i], arr[j]] = [arr[j], arr[i]]
+            }
+        }
+    }
+    return arr;
+}
+
+const fn = function(arr) {
+    for(let i=1;i<arr.length;i++) {
+        for(let j = i;j<0;j--) {
+            if(arr[j-1] > arr[j]) {
+                [arr[j-1], arr[j]] =[arr[j], arr[j-1]];
+            }
+        }
+    }
+    return arr;
+}
+
+const fn = function(arr) {
+    for(let i=0;i<arr.length;i++) {
+        let min = i;
+        for(let j = i+1;j<arr.length;j++) {
+            if (arr[min] > arr[j]) {
+                min = j;
+            }
+        }
+        if (min !== i) {
+            [arr[i], arr[min]] = [arr[min], arr[i]]
+        }
+    }
+    return arr;
+}
+
+const fn = function(arr) {
+    if (arr.length <2) {
+        return arr;
+    }
+    let left = 0;
+    let right = arr.length -1;
+    let point = arr[i];
+    while(left < right) {
+        while(left < right && arr[left] <= point) {
+            left++;
+        }
+        while(left < right && arr[right] >= point) {
+            right--;
+        }
+        [arr[left], arr[right]] = [arr[right], arr[left]]
+    }
+    if (arr[left] < point) {
+        [arr[left], arr[0]] = [arr[0], arr[left]]
+    }
+    return fn(arr.slice(0, left)).concat(fn(arr.slice(left)));
+}
+
+let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+xhr.open('url', get, true);
+xhr.send();
+xhr.onreadystatechange = function() {
+    if (xhr.state === 200 && xhr.readyState === 4) {
+        console.log(xhr.responeseText);
+    }
+}
+
+const debounce = function(fn, delay = 1000) {
+    let timer = null;
+    return function() {
+        if(timer) {
+            clearTimtout(timer);
+        }
+        let args = [...arguments];
+        let self = this;
+        timer = setTimeout(() => {
+            fn.apply(self, args);
+        }, delay);
+    }
+}
+
+const throttle = function(fn, delay = 1000) {
+    let flag = true;
+    return function () {
+        if(!flag) {
+            return
+        }
+        flag = false;
+        let self = this;
+        let arg = [...arguments];
+        setTimeout(() => {
+            fn.apply(self, args);
+            flag = true;
+        }, delay)
+    }
+}
+
+const myNew = function(fn) {
+    let obj = {
+        __proto__: fn.prototype
+    }
+    let args = [...arguments].slice(1);
+    let result = fn.apply(obj. args);
+    return result instanceof Object ? result : obj;
+}
+
+const myFlat = function(arr) {
+    return arr.reduce((prev, cur) => {
+        return Array.isArray(cur) ? prev.concat(myFlat(cur)) : prev.concat(cur);
+    }, [])
+}
+
+const myApply = function(context) {
+    context = context || window;
+    let fn = Symbol(context);
+    context[fn] = this;
+    let args = [...arguments[1]];
+    let result = context[fn](...args);
+    delete context[fn];
+    return result;
+}
+
+const myBind = function(context) {
+    let self = this;
+    let args = [...arguments].slice(1);
+    let fn = function() {
+        let brgs = [...arguments];
+        self.apply(this instanceof self ? this : context, brgs.concat(args));
+    }
+    let bfn = function() {}
+    bfn.prototype = this.prototype;
+    fn.prototype = new bfn();
+    return fn;
+}
+
+const fn = function(head) {
+    if (!head || !head.next) return false;
+    let slow = head;
+    let fast = head.next;
+    while(fast && fast.next) {
+        if (slow === fast) {
+            return true;
+        }
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return false;
+}
+
+const sleep = function(delay) {
+    return new Promise(resolve => {
+        setTimeout(resolve, delay)
+    })
+}
+
+sleep(1000).then(res => {
+    console.log(11)
+})
+
+const myTrim = function(str) {
+    return str.replace(/(^\s*) | (\s*$)/g, '');
+}
+
+const fixAddNumber = function(a,b) {
+    return parseFloat((a+b).toFixed(10));
+}
+
+const myAll = function(pomises) {
+    return new Promise((resolve, reject) => {
+        let result = [];
+        let len = promises.length;
+        promise.forEach(item => {
+            Promise.resolve(item).then(res => {
+                result.push(res);
+                if (result.length === len) {
+                    resolve(result);
+                }
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    })
+}
+
+const myRace = function(promises) {
+    return new Promise((resolve, reject) => {
+        promises.forEach((item => {
+            Promise.resolve(item).then(res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            })
+        }))
+    })
+}
+
+const myInstanceof = function(left, right) {
+    let leftPro = left.__proto__;
+    let rightPro = right.prototype;
+    while(true) {
+        if (!leftPro) {
+            return false;
+        }
+        if (leftPro === rightPro) {
+            return true;
+        }
+        leftPro = leftPro.__proto__;
+    }
+}
+
+const sum = function() {
+    let args = [...arguments];
+    let result = function() {
+        args.push(...arguments);
+        return result;
+    }
+    result.sunOf = function() {
+        return args.reduce((prev, cur) => prev + cur, 0);
+    }
+    return result;
+}
+
+Array.prototype.myMap = function(fn) {
+    let arr = this;
+    return arr.reduce((prev, cur, i) => {
+        return prev.concat(fn.call(arr, cur, i, arr))
+    }, [])
+}
+
+const repeat = function (fn, times, wait) {
+    return function() {
+        let count = 0;
+        let timer = setInterval(() => {
+            count++;
+            if(count === times) {
+                clearInterval(timer);
+            }
+        }, wait)
+    }
+}
+
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Person.prototype.sayHi = function() {
+    console.log(this.name);
+}
+
+function Student(name, age, weight) {
+    Person.call(this, name, age);
+    this.weight = weight;
+}
+
+Student.prototype = new Person();
+Student.prototype.constructor = Student;
+
+const myCloneDeep = function(source) {
+    let result;
+    if(typeof source === 'object') {
+        result = Array.isArray(source) ? [] : {};
+        for(let key in source) {
+            if(typeof source[key] === 'object') {
+                result[key] = myCloneDeep(source[key])
+            } else {
+                result[key] = source[key]
+            }
+        }
+    } else {
+        result = source
+    }
+    return result;
+}
+
+let script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '111';
+document.head.appendChild(script);
+
+function fn(){
+    console.log(111)
+}
+
+const fn = function(str) {
+    let result = '';
+    while(str.length > 3) {
+        result = ',' + str.slice(-3) + result;
+        str = str.slice(0, -3);
+    }
+    if (str) {
+        result = str + result;
+    }
+    return result;
+}
+
+const myIndexOf = function(source, target) {
+    let targetLen = target.length;
+    let sourceLen = source.length;
+    for(let i =0;i<=sourceLen - targetLen;i++) {
+        const cur = source.slice(i, i+ targetLen);
+        if (cur === target) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+const fn = function(root) {
+    let result = [];
+    let queue = [];
+    let head;
+    if(!root) {
+        return;
+    }
+    queue.push(root);
+    while(queue.length) {
+        head = queue.shift();
+        result.push(head.val);
+        if(head.left) queue.push(head.left);
+        if(head.right) queue.push(head.right);
+    }
+    return result;
+}
+
+class Subscriber {
+    constructor() {
+        this.observers = [];
+    }
+    add(observer) {
+        this.obserbers.push(observer)
+    }
+    notify() {
+        this.observers.forEach(item => {
+            item.sayHi();
+        })
+    }
+    remove(observer) {
+        this.observers = this.observers.filter(item !== observer);
+    }
+}
+
+class Observer {
+    constructor(name) {
+        this.name = name;
+    }
+    sayHi() {
+        console.log(`我是${this.name}`)
+    }
+}
+
+class Bus {
+    constructor() {
+        this.callbacks = {};
+    }
+    $on(name, fn) {
+        this.callbacks[name] = this.callbacks[name] || [];
+        this.callbacks[name].push(fn);
+    }
+    $emit(name) {
+        let args = [...arguments].slice(1);
+        if(this.callbacks[name]) {
+            this.callbacks[name].forEach(cb => cb(args));
+        }
+    }
+    $off(name) {
+        if (this.callbacks[name]) {
+            delete this.callbacks[name];
+        }
+    }
+}
+
+const fn = function(arr) {
+    let x = arr.length;
+    let y = arr[0].length;
+    for(let i = 0;i<x;i++) {
+        for(let j = 1;j<y;j++) {
+            [arr[i][j], arr[j][i]] = [arr[j][i], arr[i][j]]
+        }
+    }
+    for(let i = 0;i<x;i++) {
+        for(let j=0lj<y/2;j++) {
+            [arr[i][j],arr[i][y-j-1]] = [arr[i][y-j-1], arr[i][j]]
+        }
+    }
+}
+
+const fn = function (arr) {
+    let result = [];
+    let arrLen = arr.length;
+    let leftMax = arr[0];
+    let rightMin = arr[arrLen - 1];
+    let rightArr = new Array(arrLen);
+    for(let i = arrLen - 1;i>=0;i--) {
+        if(arr[i] < rightMin) {
+            rightMin = arr[i];
+        }
+        rightArr[i] = rightMin;
+    }
+    for(let i = 1;i< arrLen -1;i++) {
+        if (arr[i] > leftMax) {
+            leftMax = arr[i];
+            if (arr[i] < rightArr[i+1]){
+                result.push(arr[i])
+            }
+        }
+    }
+    return result;
+}
+
+const fn = function(num, source) {
+    if(num % source ===0) {
+        return true;
+    }
+    let numStr = num + '';
+    if (numStr.indexOf(source) > -1) {
+        return true;
+    }
+    return false;
+}
+
+const fn = function(n,m) {
+    return Math.floor(Math.random() * (m-n +1)) + n;
+}
+
+const fn = function(nums source) {
+    if (num % source ===0) {
+        return true;
+    }
+    num += '';
+    if (num.indexOf(source) > -1) {
+        return true;
+    }
+    return false;
+}
+
+const fn = function(num) {
+    let result = 0;
+    while(num !==0) {
+        num&=num -1;
+        result ++;
+    }
+    return result;
+}
+
+function fn(array, id, pid) {
+    let map = {};
+    let result = {};
+    for(let i =0;arr.length;i++) {
+        map[array[i].id] = array[i];
+    }
+
+    array.forEach(item => {
+        const parent = map[item.pid];
+        if(parent) {
+            if(!parent.children) {
+                parent.children = [];
+            }
+            parent.children.push(item)
+        } else {
+            result = item
+        }
+    })
+    return result;
+}
+
+```
+
+
+
+
+
+
