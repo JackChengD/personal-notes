@@ -11,7 +11,7 @@ bind方法会创建一个新函数，当这个新函数被调用时，bind的一
             let brgs = [...arguments];
              // 当作为构造函数时，this 指向实例，self 指向绑定函数，因为下面一句 `bfn.prototype = this.prototype;`，已经修改了 bfn.prototype 为 绑定函数的 prototype，此时结果为 true，当结果为 true 的时候，this 指向实例。
             // 当作为普通函数时，this 指向 window，self 指向绑定函数，此时结果为 false，当结果为 false 的时候，this 指向绑定的 context。
-            self.apply(this instanceof self ? this : context, brgs.concat(args));
+            self.apply(this instanceof self ? this : context, args.concat(brgs));
         };
         var bfn = function() {}
         bfn.prototype = this.prototype;
@@ -19,7 +19,11 @@ bind方法会创建一个新函数，当这个新函数被调用时，bind的一
         return fn;
     }
     Function.prototype.myBind = myBind;
-
+    const Fn = fn.myBind(obj);
+    new Fn();
+    Fn();
 ```
+
+
 
 参考：https://juejin.im/post/59093b1fa0bb9f006517b906  

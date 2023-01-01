@@ -44,6 +44,6 @@ flex:n
 
 =>
 
-flex-grow: n;
+flex-grow: 1;
 flex-shrink: 1;
-flex-basic: 0%;
+flex-basis: 0%;

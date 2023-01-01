@@ -3,7 +3,7 @@
 ## 区别
 
 commonjs
-> module.exports.name = 14 / exports = {} / require;
+> module.exports = {} / exports.name = 14 / require;
 > 可以动态导入加载语句，代码发生在运行时
 > 混合导出，还是同一种语法，只不过不用声明前面的对象而已，当导出引用对象时之前的导出就会被覆盖
 > 导出值时拷贝，可以修改导出的值，这在代码出错误时，不好排查，引起变量污染

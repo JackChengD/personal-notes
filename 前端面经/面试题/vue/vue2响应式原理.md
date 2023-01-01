@@ -6,7 +6,7 @@ initState方法处理props、methods、data、computed、watch。
 initProps，初始化props，对props进行响应式处理，代理到vm实例上，可以通过this.propKey的方式访问；  
 initMethods，初始化methods，对methods进行判重处理，不可以和props、vue实例的方法重名，将方法赋值待vm实例上，可以通过this.methodKey的方式访问；  
 initData，初始化data，如果是函数会先执行getData方法，保证data一定是一个对象。判重处理，不可以和props、methods重名，然后将data代理到实例上，进行响应式处理；  
-initComputed，初始化computed，获取computed的getter方法，然后通过watcher实例化一个computed对象，所以computed本质上也是一个watcher并且是懒执行的，computed能够缓存是因为，watcher.dirty属性，它在一次渲染中，第一次执行计算新的值后，watcher.evaluate会把dirty置为false，所以后续执行会直接取watcher.value获取，只有重新调用watcher.update时才会重新将watcher.dirty置为true。进行判重处理，不能和props、methods、data重名，然后进行响应式处理。  
+initComputed，初始化computed，获取computed的getter方法，然后通过watcher实例化一个computed对象，所以computed本质上也是一个watcher并且是懒执行的，computed能够缓存是因为，watcher.dirty属性，它在一次渲染中，第一次执行计算新的值后，watcher.evaluate会把dirty置为false，所以后续执行会直接取watcher.value获取，只有重新调用watcher.update时才会重新将watcher.dirty置为true。进行判重处理，不能和props、data重名，然后进行响应式处理。  
 initWatch，初始化watcher，watcher的写法有很多，可以是函数、数组、字符串、对象，对每个watch会进行遍历，如果是数组会再进行for遍历，然后调用createWatcher创建，createWatcher会看是不是对象，是对象会将handler函数赋值到handler，字符串就取对应的方法赋值到handler，然后调用$watch方法。$watch会根据配置创建watcher对象，如果有immediate会自动执行一次。最后返回一个unwatchFn用来解除监听。  
 
 ## 响应式处理

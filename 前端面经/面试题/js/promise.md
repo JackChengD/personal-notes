@@ -39,7 +39,9 @@
     var p2 = Promise.resolve(2);
     var p3 = Promise.resolve(3);
     var promises = [p1, p2, p3];
-    console.log(Promise.myAll(promises))
+    console.log(Promise.myAll(promises).then(res => {
+        console.log(res)
+    }))
 ```
 
 ### race方法

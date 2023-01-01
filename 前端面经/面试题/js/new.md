@@ -19,14 +19,14 @@
       let result = fn.apply(obj, args);
       return result instanceof Object ? result : obj;
     }
-    function person(name, age) {
+    function Person(name, age) {
       this.name = name;
       this.age = age;
     }
-    person.prototype.sayHi = function () {
+    Person.prototype.sayHi = function () {
       console.log(this.name)
     }
-    let obj = _new(person, '小米', 14);
+    let obj = _new(Person, '小米', 14);
     obj.sayHi();//小米
     console.log(obj);
     // person {name: "小米", age: 14}

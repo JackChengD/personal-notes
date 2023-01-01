@@ -13,5 +13,9 @@ fn.apply(obj, args);
         return result;
     }
     Function.prototype.myApply = myApply;
+    const obj = {};
+    function fn(source) {
+        console.log(source)
+    }
     fn.myApply(obj, [1, 2, 3]);
 ```

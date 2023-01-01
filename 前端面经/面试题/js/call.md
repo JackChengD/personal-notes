@@ -9,8 +9,13 @@ fn.call(obj, args1, args2,...);
         context[fn] = this;
         let args = [...arguments].slice(1);
         let result = context[fn](...args);
-        delete comtext[fn];
+        delete context[fn];
         return result;
     }
     Function.prototype.myCall = myCall;
+    const obj = {};
+    function fn(source) {
+        console.log(source)
+    }
+    fn.myCall(obj, [1, 2, 3]);
 ```

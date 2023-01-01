@@ -1119,6 +1119,197 @@ function fn(array, id, pid) {
     return result;
 }
 
+function _new (fn) {
+    let obj = {
+        __proto__: fn.prototype
+    }
+    let args = [...arguments].slice(1);
+    let result = fn.apply(obj, args);
+    return result instanceof Object ? result : obj;
+}
+
+
+function myCall (context) {
+    context = context || window;
+    const fn = Symbol(context);
+    const args = [...arguments].slice(1);
+    context[fn] = this;
+    const result = context[fn](..args);
+    delete context[fn];
+    return result;
+}
+
+function myBind(context) {
+    const self = this;
+    const args = [...arguments].slice(1);
+    function fn() {
+        const brgs = [...arguments];
+        self.apply(this instanceof self ? this : context, args.concat(brgs))
+    }
+    function bfn () {}
+    bfn.prototype = self.prototype;
+    fn.prototype = new bfn();
+    return fn;
+}
+
+function createIterator(arr) {
+    let i = 0;
+    return {
+        next: function() {
+            const done = i > arr.length - 1;
+            const value = done ? undefined : arr[i++];
+            return {
+                done,
+                value
+            }
+        }
+    }
+}
+
+const iterator = createIterator([1,2,3]);
+iterator.next();
+iterator.next();
+iterator.next();
+
+const arr = [1,2,3,4];
+const iterator = arr[Symbol.iterator]();
+for (let value, done, res; (res = iterator.next()) && !res.done;) {
+    value = res.value;
+    done = res.done;
+    console.log(value, done)
+}
+
+function fn(arr) {
+    return arr.reduce((prev, cur) => {
+        return prev.concat(Array.isArray(cur) ? fn(cur) : cur);
+    }, [])
+}
+
+function fn(arr) {
+    const result = [];
+    const cur = [];
+    const len = arr.length;
+    function fn() {
+        if (cur.length === len) {
+            result.push(cur.slice());
+            return;
+        }
+        for (let i = 0;i<len;i++) {
+            if (cur.indexOf(arr[i]) > -1) {
+                continue;
+            }
+            cur.push(arr[i]);
+            fn();
+            cur.pop();
+        }
+    }
+    fn();
+
+    return result;
+}
+
+function iterator (arr) {
+    let i = 0;
+    return {
+        next: function () {
+            const done = i >= arr.length ? true : false;
+            const value = done ? undefined : arr[i];
+            return {
+                done,
+                value
+            }
+        }
+    }
+}
+
+for of ;
+
+const gen = iterator(arr);
+for (let done, value, res; (res = gen.next()) && !res.done;) {
+    done = res.done;
+    value = res.value;
+    console.log(value, done);
+}
+
+function myBind(context) {
+    let self = this;
+    const args = [...arguments].slice(1);
+    function fn() {
+        const brgs = [...arguments];
+        return self.apply(this instanceof self ? this : context, brgs.cancat(args));
+    }
+    function bfn() {};
+    bfn.prototype = self.prototype;
+    fn.prototype = new bfn();
+
+    return fn;
+}
+
+function myApply(context) {
+    context = context || window;
+    const fn = Symbol('fn');
+    const args = [...arguments].slice(1);
+    context[fn] = this;
+    const result = context[fn](...args);
+    delete context[fn];
+    return result;
+}
+
+function fn(a,b) {
+    console.log(a,b);
+}
+fn.apply(null, [1,2])
+
+  const array = [{
+     "id": 0,
+     "name": "根节点"
+   },
+   {
+     "id": 2,
+     "name": "第一级1",
+     "pid": 0
+   },
+   {
+     "id": 3,
+     "name": "第二级1",
+     "pid": 2
+   },
+   {
+     "id": 1,
+     "name": "第一级1",
+     "pid": 0
+   },
+   {
+     "id": 6,
+     "name": "第三级2",
+     "pid": 3
+   },
+ ];
+
+ function fn(arr) {
+    let result = {};
+    let map = new Map();
+
+    for (let cur of arr) {
+        map.set(cur.id, cur)
+    }
+    const len = arr.length;
+    for(let i = 0;i<len;i++) {
+        if (map.has(arr[i].pid)) {
+            const parent = map.get(arr[i].pid);
+            if (!parent.children) {
+                parent.children =  [];
+            }
+            parent.children.push(arr[i]);
+        } else {
+            result = arr[i];
+        }
+    }
+    return result;
+ }
+
+ console.log(fn(array));
+
 ```
 
 
