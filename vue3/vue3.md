@@ -28,7 +28,7 @@
 
 ### 基于Proxy的观察者机制
 
-> 目前，Vue的反应系统是使用Object.defineProperty的getter和setter，但是Vue3将使用ES2015的Proxy作为其观察者机制。这消除了以前存在的警告，使速度加倍，并节省了一半的内存开销  
+> 目前，Vue的响应式系统是使用Object.defineProperty的getter和setter，但是Vue3将使用ES2015的Proxy作为其观察者机制。这消除了以前存在的警告，使速度加倍，并节省了一半的内存开销  
 > 为了继续支持IE11，Vue3将发布一个支持旧观察者机制和新Proxy版本的构建
 
 ## 使Vue更小

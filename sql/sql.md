@@ -1,10 +1,12 @@
 # sql学习
 
 ## 简介
+
 >- SQL 是用于访问和处理数据库的标准的计算机语言
 >- 菜鸟学习官网https://www.runoob.com/sql/sql-tutorial.html
 
 ### 简单的增删查改
+
 ```sql
 //在style表插入id、name、url、alexa、country
 insert into style(id,name,url,alexa,country) 

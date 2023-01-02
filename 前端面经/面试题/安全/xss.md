@@ -15,9 +15,9 @@
 ## 防范
 
 - 开启CSP，建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规则，如何拦截是由浏览器自己实现的。
-- 开启CSP的方式
-- 设置HTTP Header的Content-Security-Policy
-- 设置meta标签的方式
+  - 开启CSP的方式
+  - 设置HTTP Header的Content-Security-Policy
+  - 设置meta标签的方式
 
 - 转义，过滤特殊字符
 - cookie设置为httpOnly，禁止客户端访问

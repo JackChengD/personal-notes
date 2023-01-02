@@ -5,11 +5,12 @@
 /**
     冒泡
 **/
-const fn = function(arr) {
-    for(let i=0;i<arr.length;i++) {
-        for(let j=i+1;j<arr.length;j++) {
-            if(arr[i]>arr[j]) {
-                [arr[i], arr[j]] = [arr[j], arr[i]]
+function fn (arr) {
+    const len = arr.length;
+    for (let i =0;i<len;i++) {
+        for (let j = i+1;j<len;j++) {
+            if (arr[i] > arr[j]) {
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
         }
     }
@@ -24,10 +25,11 @@ console.log(fn(arr));
 **/
 
 const fn = function(arr) {
-    for(let i=1;i<arr.length;i++) {
-        for(let j = i;j>0;j--) {
-            if(arr[j-1]> arr[j]) {
-                [arr[j-1], arr[j]] = [arr[j], arr[j-1]]
+    const len = arr.length;
+    for (let i = 1;i<len;i++) {
+        for (let j=i;j>0;j--) {
+            if (arr[j-1] > arr[j]) {
+                [arr[j-1], arr[j]] = [arr[j], arr[j-1]];
             }
         }
     }
@@ -42,15 +44,16 @@ console.log(fn(arr));
 **/
 
 const fn = function(arr) {
-    for(let i=0;i<arr.length;i++) {
+    const len = arr.length;
+    for (let i =0; i< len;i++) {
         let min = i;
-        for(let j=i+1;j<arr.length;j++) {
-            if(arr[min] > arr[j]) {
+        for (let j = i+1;i<len;j++) {
+            if (arr[min] > arr[j]) {
                 min = j;
             }
         }
-        if(min!==i) {
-            [arr[i], arr[min]] = [arr[min], arr[i]]
+        if (min !== i) {
+            [arr[i], arr[min]] = [arr[min], arr[i]];
         }
     }
     return arr;
@@ -64,21 +67,24 @@ console.log(fn(arr));
 **/
 
 const fn = function(arr) {
-    if(arr.length<2) return arr;
+    const len = arr.length;
+    if (len < 2) {
+        return arr;
+    }
     let left = 0;
-    let right = arr.length-1;
+    let right = len - 1;
     let point = arr[0];
-    while(left<right) {
-        while(left<right && arr[left]<=point) {
+    while(left < right) {
+        while(left < right && arr[left] <= point) {
             left++;
         }
-        while(left<right && arr[right]>=point) {
+        while(left < right && arr[right] >= point) {
             right--;
         }
         [arr[left], arr[right]] = [arr[right], arr[left]];
     }
-    if(arr[left]< point) {
-        [arr[left], arr[0]] = [arr[0], arr[left]]
+    if (point > arr[left]) {
+        [arr[0], arr[left]] = [arr[left], arr[0]];
     }
     return fn(arr.slice(0, left)).concat(fn(arr.slice(left)));
 }
@@ -141,7 +147,7 @@ const myApply = function(context) {
     context = context || window;
     var fn = Symbol(context);
     context[fn] = this;
-    var args = [...arguments[1]];
+    var args = [...arguments].slice(1);
     var result = context[fn](...args);
     delete context[fn];
     return result;
@@ -533,20 +539,21 @@ class Bus {
 **/
 
 const fn = function(arr) {
-    let x = arr.length;
-    let y = arr[0].length;
+    const row = arr.length;
+    const col = arr[0].length;
+    
+    for (let i = 0;i< Math.floor(row/ 2);i++) {
+        for (let j = 0; j< col ;j++) {
+            [arr[i][j], arr[row - i -1][j]] = [arr[row - i - 1][j], arr[i][j]]
+        }
+    }
 
-    for(let i=0;i<x;i++){
-        for(let j=i;j<y;j++) {
+    for (let i = 0;i<row;i++) {
+        for (let j = 0;j<i;j++) {
             [arr[i][j], arr[j][i]] = [arr[j][i], arr[i][j]]
         }
     }
-
-    for(let i=0;i<x;i++) {
-        for(let j=0;j<y/2;j++) {
-            [arr[i][j], arr[i][y-j-1]] = [arr[i][y-j-1], arr[i][j]];
-        }
-    }
+    return arr;
 }
 
 console.log(fn([[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
@@ -556,34 +563,34 @@ console.log(fn([[1, 2, 3, 4],[5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
   两次遍历，记录左边最大值，右边用新数组记录每个点（从右往左）的最小值
   从右往左找，找到每个位置的最小值并记录起来
   从左往右找，当前值大于左边最大值，更新左边最大值，再看当前值是否小于（右边过来的数组）索引下一个小
-  如果是，那么当前是就是比左边都小比右边都大的数
+  如果是，那么当前是就是比左边都大比右边都小的数
 **/
-const fn = function(arr) {
-  let result = [];
-  let arrLen = arr.length;
-  let leftMax = arr[0];
-  let rightMin = arr[arrLen-1];
-  let rightArr = new Array(arrLen);
-
-  for(let i=arrLen-1;i>=0;i--) {
-    if(arr[i] < rightMin) {
-      rightMin = arr[i];
+function fn(arr) {
+    const result = [];
+    const len = arr.length;
+    const leftMax = new Array(len);
+    const rightMin = new Array(len);
+    let curLeftMax = arr[0];
+    let curRightMin = arr[len - 1];
+    for (let i = len - 1; i >= 0; i--) {
+        if (arr[i] < curRightMin) {
+            curRightMin = arr[i];
+        }
+        rightMin[i] = curRightMin;
     }
-    rightArr[i] = rightMin;
-  }
 
-  // 第一个和最后一个不用看
-  for(let i=1;i<arrLen-1;i++) {
-    if(arr[i]>leftMax) {
-      leftMax = arr[i];
-      if(arr[i] < rightArr[i+1]) {
-        result.push(arr[i])
-      }
+    // 第一个和最后一个不用看
+    for (let i = 1; i < len -1 ;i++) {
+        if (arr[i] > curLeftMax) {
+            if (arr[i] < rightMin[i+1]) {
+                result.push(arr[i]);
+            }
+            curLeftMax = arr[i];
+        }
     }
-  }
-
-  return result;
+    return result;
 }
+
 
 console.log(fn([1,2,3,7,4,5,6]))
 
@@ -593,10 +600,14 @@ console.log(fn([1,2,3,7,4,5,6]))
   num是否为source的倍数或者包含source
 **/
 const fn = function(num, source) {
-  if(num % source === 0) return true;
-  let numStr = num + '';
-  if(numStr.indexOf(source)> -1) return true;
-  return false
+    if (num % source === 0) {
+        return true;
+    }
+    const numStr = num + '';
+    if (numStr.indexOf(source) > -1) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -627,75 +638,108 @@ const fn = function(num) {
     return result;
 }
 
-function fn(array, id, pid) {
-    let map = {};
-    let result = {};
-    for(let i=0;array.length;i+) {
-        map[array[i].id] = array[i];
-    }
+const array = [{
+        "id": 0,
+        "name": "根节点"
+    },
+    {
+        "id": 2,
+        "name": "第一级1",
+        "pid": 0
+    },
+    {
+        "id": 3,
+        "name": "第二级1",
+        "pid": 2
+    },
+    {
+        "id": 1,
+        "name": "第一级1",
+        "pid": 0
+    },
+    {
+        "id": 6,
+        "name": "第三级2",
+        "pid": 3
+    },
+];
 
-    array.forEach(item => {
-        const parent = map[item.pid];
-        if(parent) {
-            if(!parent.children) {
+function fn(arr) {
+    const map = new Map();
+    let result = {};
+    const len = arr.length;
+    for (let i = 0; i<len;i++) {
+        map.set(arr[i].id, arr[i])
+    }
+    for (let i = 0; i<len;i++) {
+        const parent = map.get(arr[i].pid);
+        if (parent) {
+            if (!parent.children) {
                 parent.children = []
             }
-            parent.children.push(item)
+            parent.children.push(arr[i])
         } else {
-            result = item;
+            result = arr[i];
         }
-    })
+    }
+
     return result;
 }
 
+console.log(fn(array))
+
 ```
 
-
 ```js
-const fn = function(arr) {
-    for(let i =0;i<arr.length;i++) {
-        for(let j = i+1;j<arr.lengtj;j++) {
-            if(arr[i] > arr[j]) {
-                [arr[i], arr[j]] = [arr[j], arr[i]]
+function fn (arr) {
+    const len = arr.length;
+    for (let i =0;i<len;i++) {
+        for (let j = i+1;j<len;j++) {
+            if (arr[i] > arr[j]) {
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
         }
     }
     return arr;
 }
 
-const fn = function(arr) {
-    for(let i=1;i<arr.length;i++) {
-        for(let j = i;j<0;j--) {
-            if(arr[j-1] > arr[j]) {
-                [arr[j-1], arr[j]] =[arr[j], arr[j-1]];
+function fn (arr) {
+    const len = arr.length;
+    for (let i = 1;i<len;i++) {
+        for (let j=i;j>0;j--) {
+            if (arr[j-1] > arr[j]) {
+                [arr[j-1], arr[j]] = [arr[j], arr[j-1]];
             }
         }
     }
     return arr;
 }
 
-const fn = function(arr) {
-    for(let i=0;i<arr.length;i++) {
+function fn (arr) {
+    const len = arr.length;
+    for (let i =0; i< len;i++) {
         let min = i;
-        for(let j = i+1;j<arr.length;j++) {
+        for (let j = i+1;i<len;j++) {
             if (arr[min] > arr[j]) {
                 min = j;
             }
         }
         if (min !== i) {
-            [arr[i], arr[min]] = [arr[min], arr[i]]
+            [arr[i], arr[min]] = [arr[min], arr[i]];
         }
     }
     return arr;
 }
 
-const fn = function(arr) {
-    if (arr.length <2) {
+
+function fn (arr) {
+    const len = arr.length;
+    if (len < 2) {
         return arr;
     }
     let left = 0;
-    let right = arr.length -1;
-    let point = arr[i];
+    let right = len - 1;
+    let point = arr[0];
     while(left < right) {
         while(left < right && arr[left] <= point) {
             left++;
@@ -703,116 +747,143 @@ const fn = function(arr) {
         while(left < right && arr[right] >= point) {
             right--;
         }
-        [arr[left], arr[right]] = [arr[right], arr[left]]
+        [arr[left], arr[right]] = [arr[right], arr[left]];
     }
-    if (arr[left] < point) {
-        [arr[left], arr[0]] = [arr[0], arr[left]]
+    if (point > arr[left]) {
+        [arr[0], arr[left]] = [arr[left], arr[0]];
     }
     return fn(arr.slice(0, left)).concat(fn(arr.slice(left)));
 }
 
-let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+function fn(root) {
+    if (!root) {
+        return [];
+    }
+    const result = [];
+    const queue = [root];
+    while(queue.length) {
+        const cur = queue.shift();
+        result.push(cur.val);
+        if (cur.left) {
+            queue.push(cur.left);
+        }
+        if (cur.right) {
+            queue.push(cur.right);
+        }
+    }
+    return result;
+}
+
+const xhr = window.XMLHttpRequest ? new XMLHtppRequest () : new ActiveXObject('Microsoft.XMLHTTP');
 xhr.open('url', get, true);
 xhr.send();
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
     if (xhr.state === 200 && xhr.readyState === 4) {
-        console.log(xhr.responeseText);
+        console.log(xhr.responseText);
     }
 }
 
-const debounce = function(fn, delay = 1000) {
+const debounce = function (fn, delay = 1000) {
     let timer = null;
-    return function() {
-        if(timer) {
-            clearTimtout(timer);
+    return function () {
+        if (timer) {
+            clearTimeout(timer);
         }
-        let args = [...arguments];
-        let self = this;
+        const args = [...arguments];
+        const self = this;
         timer = setTimeout(() => {
             fn.apply(self, args);
         }, delay);
     }
 }
 
-const throttle = function(fn, delay = 1000) {
+const throttle = function (fn, delay = 1000) {
     let flag = true;
     return function () {
-        if(!flag) {
-            return
+        if (!flag) {
+            return;
         }
         flag = false;
-        let self = this;
-        let arg = [...arguments];
+        const args = [...arguments];
+        const self = this;
         setTimeout(() => {
             fn.apply(self, args);
             flag = true;
-        }, delay)
+        }, true)
     }
 }
 
 const myNew = function(fn) {
-    let obj = {
-        __proto__: fn.prototype
+    const obj = {
+        __proto__: fn.protyoe
     }
-    let args = [...arguments].slice(1);
-    let result = fn.apply(obj. args);
+    const args = [...arguments].slice(1);
+    const result = fn.apply(obj, args);
     return result instanceof Object ? result : obj;
 }
 
 const myFlat = function(arr) {
     return arr.reduce((prev, cur) => {
-        return Array.isArray(cur) ? prev.concat(myFlat(cur)) : prev.concat(cur);
+        return prev.concat(Array.isArray(cur) ? myFlat(cur) : cur);
     }, [])
 }
 
-const myApply = function(context) {
+const myApply = function (context) {
     context = context || window;
-    let fn = Symbol(context);
+    const fn = Symbol(context);
     context[fn] = this;
-    let args = [...arguments[1]];
-    let result = context[fn](...args);
+    const args = [...arguments[1]];
+    const result = context[fn](...args);
     delete context[fn];
     return result;
 }
 
-const myBind = function(context) {
-    let self = this;
-    let args = [...arguments].slice(1);
-    let fn = function() {
-        let brgs = [...arguments];
-        self.apply(this instanceof self ? this : context, brgs.concat(args));
+const myCall = function (context) {
+    context = context || window;
+    const fn = Symbol(context);
+    context[fn] = this;
+    const args = [...arguments].slice(1);
+    const result = context[fn](...args);
+    delete context[fn];
+    return result;
+}
+
+const myBind = function (context) {
+    const self = this;
+    const args= [...arguments].slice(1);
+    function fn() {
+        const brgs = [...arguments];
+        return self.apply(this instanceof self ? this : context, args.concat(brgs));
     }
-    let bfn = function() {}
-    bfn.prototype = this.prototype;
+    function bfn() {};
+    bfn.prototype = self.prototype;
     fn.prototype = new bfn();
     return fn;
 }
 
-const fn = function(head) {
-    if (!head || !head.next) return false;
-    let slow = head;
+function fn (head) {
+    if (!head || !head.next) {
+        return false;
+    }
+    let slot = head;
     let fast = head.next;
     while(fast && fast.next) {
-        if (slow === fast) {
+        if (slot === fast) {
             return true;
         }
-        slow = slow.next;
+        slot = slot.next;
         fast = fast.next.next;
     }
     return false;
 }
 
-const sleep = function(delay) {
+function sleep (delay) {
     return new Promise(resolve => {
         setTimeout(resolve, delay)
     })
 }
 
-sleep(1000).then(res => {
-    console.log(11)
-})
-
-const myTrim = function(str) {
+const myTrim = function (str) {
     return str.replace(/(^\s*) | (\s*$)/g, '');
 }
 
@@ -820,12 +891,12 @@ const fixAddNumber = function(a,b) {
     return parseFloat((a+b).toFixed(10));
 }
 
-const myAll = function(pomises) {
+const myAll = function(promises) {
     return new Promise((resolve, reject) => {
-        let result = [];
-        let len = promises.length;
-        promise.forEach(item => {
-            Promise.resolve(item).then(res => {
+        const len = promises.length;
+        const result = [];
+        for(let i =0;i<len;i++) {
+            Promise.resolve(promises[i]).then(res => {
                 result.push(res);
                 if (result.length === len) {
                     resolve(result);
@@ -833,23 +904,24 @@ const myAll = function(pomises) {
             }).catch(err => {
                 reject(err);
             })
-        })
-    })
+        }
+    });
 }
 
 const myRace = function(promises) {
     return new Promise((resolve, reject) => {
-        promises.forEach((item => {
-            Promise.resolve(item).then(res => {
+        const len = promises.length;
+        for (let i = 0; i< len;i++) {
+            Promise.resolve(promises[i]).then(res => {
                 resolve(res);
             }).catch(err => {
                 reject(err);
             })
-        }))
-    })
+        }
+    });
 }
 
-const myInstanceof = function(left, right) {
+const myInstanceof (left, right) {
     let leftPro = left.__proto__;
     let rightPro = right.prototype;
     while(true) {
@@ -863,35 +935,26 @@ const myInstanceof = function(left, right) {
     }
 }
 
-const sum = function() {
-    let args = [...arguments];
-    let result = function() {
-        args.push(...arguments);
+const sum = function () {
+    const args = [...arguments];
+    const result = function () {
+        const brgs = [...arguments];
+        args.push(...brgs);
         return result;
     }
-    result.sunOf = function() {
-        return args.reduce((prev, cur) => prev + cur, 0);
+    result.sumOf = function () {
+        args.reduce((prev, cur) => {
+            return prev + cur;
+        }, 0)
     }
     return result;
 }
 
-Array.prototype.myMap = function(fn) {
-    let arr = this;
+Array.prototype.myMap = (fn) {
+    const arr = this;
     return arr.reduce((prev, cur, i) => {
-        return prev.concat(fn.call(arr, cur, i, arr))
+        return prev.concat(fn.call(arr, cur, i, arr);)
     }, [])
-}
-
-const repeat = function (fn, times, wait) {
-    return function() {
-        let count = 0;
-        let timer = setInterval(() => {
-            count++;
-            if(count === times) {
-                clearInterval(timer);
-            }
-        }, wait)
-    }
 }
 
 function Person(name, age) {
@@ -899,42 +962,32 @@ function Person(name, age) {
     this.age = age;
 }
 
-Person.prototype.sayHi = function() {
-    console.log(this.name);
+Person.prototypr.sayHi = function() {
+    console.log('sayHi');
 }
 
-function Student(name, age, weight) {
-    Person.call(this, name, age);
-    this.weight = weight;
+function Student (name, age, height) {
+    Person.call(this, nam, age);
+    this.height = height;
 }
 
-Student.prototype = new Person();
-Student.prototype.constructor = Student;
+Student.prototype = new Person()
+Student.protptype.constructor = Student;
 
-const myCloneDeep = function(source) {
+function myClone (sourse) {
     let result;
-    if(typeof source === 'object') {
+    if (typeof source === 'object') {
         result = Array.isArray(source) ? [] : {};
-        for(let key in source) {
-            if(typeof source[key] === 'object') {
-                result[key] = myCloneDeep(source[key])
+        for (let key in source) {
+            if (typeof source[key] === 'object') {
+                result[key] = myClone(source[key]);
             } else {
-                result[key] = source[key]
+                result[key] = source[key];
             }
         }
     } else {
-        result = source
+        result = source;
     }
-    return result;
-}
-
-let script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = '111';
-document.head.appendChild(script);
-
-function fn(){
-    console.log(111)
 }
 
 const fn = function(str) {
@@ -949,11 +1002,11 @@ const fn = function(str) {
     return result;
 }
 
-const myIndexOf = function(source, target) {
+const myIndexof = function(source, target) {
     let targetLen = target.length;
     let sourceLen = source.length;
-    for(let i =0;i<=sourceLen - targetLen;i++) {
-        const cur = source.slice(i, i+ targetLen);
+    for (let i =0;i<=sourceLen - targetLen;i++) {
+        const cur = source.slice(i, i + targetLen);
         if (cur === target) {
             return i;
         }
@@ -961,37 +1014,40 @@ const myIndexOf = function(source, target) {
     return -1;
 }
 
-const fn = function(root) {
-    let result = [];
-    let queue = [];
-    let head;
-    if(!root) {
+function fn(root) {
+    if (!root) {
         return;
     }
-    queue.push(root);
+    const result = [];
+    const queue = [root];
     while(queue.length) {
-        head = queue.shift();
-        result.push(head.val);
-        if(head.left) queue.push(head.left);
-        if(head.right) queue.push(head.right);
+        const cur = queue.shift();
+        result.push(cur.val);
+        if (cur.left) {
+            queue.push(cur.left);
+        }
+        if (cur.right) {
+            queue.push(cur.right);
+        }
     }
+
     return result;
 }
 
-class Subscriber {
+class Subscribe {
     constructor() {
         this.observers = [];
     }
-    add(observer) {
-        this.obserbers.push(observer)
+    depend(fn) {
+        this.observers.push(fn)
     }
     notify() {
-        this.observers.forEach(item => {
-            item.sayHi();
+        this.obersers.forEach((item) => {
+            item.update();
         })
     }
-    remove(observer) {
-        this.observers = this.observers.filter(item !== observer);
+    remove(fn) {
+        this.obersers = this.observers.filter(item => item !== fn);
     }
 }
 
@@ -999,10 +1055,21 @@ class Observer {
     constructor(name) {
         this.name = name;
     }
-    sayHi() {
-        console.log(`我是${this.name}`)
+    update() {
+        console.log('this.name', this.name);
     }
 }
+
+const observer1 = new Observer(1);
+const observer2 = new Observer(2);
+const observer3 = new Observer(3);
+const subscribe = new Subscribe();
+subscribe.depend(observer1);
+subscribe.depend(observer2);
+subscribe.depend(observer3);
+subscribe.notify();
+subscribe.remove(observer1);
+subscribe.notify();
 
 class Bus {
     constructor() {
@@ -1010,310 +1077,130 @@ class Bus {
     }
     $on(name, fn) {
         this.callbacks[name] = this.callbacks[name] || [];
-        this.callbacks[name].push(fn);
+        this.callbacks[name].push(fn)
     }
     $emit(name) {
-        let args = [...arguments].slice(1);
-        if(this.callbacks[name]) {
-            this.callbacks[name].forEach(cb => cb(args));
-        }
+        let args = [...arguments].slice(1)
+        this.callbacks[name].forEach(item => {
+            item(args);
+        })
     }
     $off(name) {
         if (this.callbacks[name]) {
-            delete this.callbacks[name];
+            delete this.callback[name];
         }
     }
 }
 
 const fn = function(arr) {
-    let x = arr.length;
-    let y = arr[0].length;
-    for(let i = 0;i<x;i++) {
-        for(let j = 1;j<y;j++) {
+    const row = arr.length;
+    const col = arr[0].length;
+    
+    for (let i = 0;i< Math.floor(row/ 2);i++) {
+        for (let j = 0; j< col ;j++) {
+            [arr[i][j], arr[row - i -1][j]] = [arr[row - i - 1][j], arr[i][j]]
+        }
+    }
+
+    for (let i = 0;i<row;i++) {
+        for (let j = 0;j<i;j++) {
             [arr[i][j], arr[j][i]] = [arr[j][i], arr[i][j]]
         }
     }
-    for(let i = 0;i<x;i++) {
-        for(let j=0lj<y/2;j++) {
-            [arr[i][j],arr[i][y-j-1]] = [arr[i][y-j-1], arr[i][j]]
-        }
-    }
+    return arr;
 }
 
-const fn = function (arr) {
-    let result = [];
-    let arrLen = arr.length;
-    let leftMax = arr[0];
-    let rightMin = arr[arrLen - 1];
-    let rightArr = new Array(arrLen);
-    for(let i = arrLen - 1;i>=0;i--) {
-        if(arr[i] < rightMin) {
-            rightMin = arr[i];
+function fn(arr) {
+    const result = [];
+    const len = arr.length;
+    const leftMax = new Array(len);
+    const rightMin = new Array(len);
+    let curLeftMax = arr[0];
+    let curRightMin = arr[len - 1];
+    for (let i = len - 1; i >= 0; i--) {
+        if (arr[i] < curRightMin) {
+            curRightMin = arr[i];
         }
-        rightArr[i] = rightMin;
+        rightMin[i] = curRightMin;
     }
-    for(let i = 1;i< arrLen -1;i++) {
-        if (arr[i] > leftMax) {
-            leftMax = arr[i];
-            if (arr[i] < rightArr[i+1]){
-                result.push(arr[i])
+
+    // 第一个和最后一个不用看
+    for (let i = 1; i < len -1 ;i++) {
+        if (arr[i] > curLeftMax) {
+            if (arr[i] < rightMin[i+1]) {
+                result.push(arr[i]);
             }
+            curLeftMax = arr[i];
         }
     }
     return result;
 }
 
-const fn = function(num, source) {
-    if(num % source ===0) {
+console.log(fn([1,2,3,7,4,5,6]))
+
+function fn (num, source) {
+    if (num % source === 0) {
         return true;
     }
-    let numStr = num + '';
+    const numStr = num + '';
     if (numStr.indexOf(source) > -1) {
         return true;
     }
     return false;
 }
 
-const fn = function(n,m) {
+function fn(n, m) {
     return Math.floor(Math.random() * (m-n +1)) + n;
 }
 
-const fn = function(nums source) {
-    if (num % source ===0) {
-        return true;
-    }
-    num += '';
-    if (num.indexOf(source) > -1) {
-        return true;
-    }
-    return false;
-}
-
-const fn = function(num) {
-    let result = 0;
-    while(num !==0) {
-        num&=num -1;
-        result ++;
-    }
-    return result;
-}
-
-function fn(array, id, pid) {
-    let map = {};
-    let result = {};
-    for(let i =0;arr.length;i++) {
-        map[array[i].id] = array[i];
-    }
-
-    array.forEach(item => {
-        const parent = map[item.pid];
-        if(parent) {
-            if(!parent.children) {
-                parent.children = [];
-            }
-            parent.children.push(item)
-        } else {
-            result = item
-        }
-    })
-    return result;
-}
-
-function _new (fn) {
-    let obj = {
-        __proto__: fn.prototype
-    }
-    let args = [...arguments].slice(1);
-    let result = fn.apply(obj, args);
-    return result instanceof Object ? result : obj;
-}
-
-
-function myCall (context) {
-    context = context || window;
-    const fn = Symbol(context);
-    const args = [...arguments].slice(1);
-    context[fn] = this;
-    const result = context[fn](..args);
-    delete context[fn];
-    return result;
-}
-
-function myBind(context) {
-    const self = this;
-    const args = [...arguments].slice(1);
-    function fn() {
-        const brgs = [...arguments];
-        self.apply(this instanceof self ? this : context, args.concat(brgs))
-    }
-    function bfn () {}
-    bfn.prototype = self.prototype;
-    fn.prototype = new bfn();
-    return fn;
-}
-
-function createIterator(arr) {
-    let i = 0;
-    return {
-        next: function() {
-            const done = i > arr.length - 1;
-            const value = done ? undefined : arr[i++];
-            return {
-                done,
-                value
-            }
-        }
-    }
-}
-
-const iterator = createIterator([1,2,3]);
-iterator.next();
-iterator.next();
-iterator.next();
-
-const arr = [1,2,3,4];
-const iterator = arr[Symbol.iterator]();
-for (let value, done, res; (res = iterator.next()) && !res.done;) {
-    value = res.value;
-    done = res.done;
-    console.log(value, done)
-}
+const array = [{
+        "id": 0,
+        "name": "根节点"
+    },
+    {
+        "id": 2,
+        "name": "第一级1",
+        "pid": 0
+    },
+    {
+        "id": 3,
+        "name": "第二级1",
+        "pid": 2
+    },
+    {
+        "id": 1,
+        "name": "第一级1",
+        "pid": 0
+    },
+    {
+        "id": 6,
+        "name": "第三级2",
+        "pid": 3
+    },
+];
 
 function fn(arr) {
-    return arr.reduce((prev, cur) => {
-        return prev.concat(Array.isArray(cur) ? fn(cur) : cur);
-    }, [])
-}
-
-function fn(arr) {
-    const result = [];
-    const cur = [];
-    const len = arr.length;
-    function fn() {
-        if (cur.length === len) {
-            result.push(cur.slice());
-            return;
-        }
-        for (let i = 0;i<len;i++) {
-            if (cur.indexOf(arr[i]) > -1) {
-                continue;
-            }
-            cur.push(arr[i]);
-            fn();
-            cur.pop();
-        }
-    }
-    fn();
-
-    return result;
-}
-
-function iterator (arr) {
-    let i = 0;
-    return {
-        next: function () {
-            const done = i >= arr.length ? true : false;
-            const value = done ? undefined : arr[i];
-            return {
-                done,
-                value
-            }
-        }
-    }
-}
-
-for of ;
-
-const gen = iterator(arr);
-for (let done, value, res; (res = gen.next()) && !res.done;) {
-    done = res.done;
-    value = res.value;
-    console.log(value, done);
-}
-
-function myBind(context) {
-    let self = this;
-    const args = [...arguments].slice(1);
-    function fn() {
-        const brgs = [...arguments];
-        return self.apply(this instanceof self ? this : context, brgs.cancat(args));
-    }
-    function bfn() {};
-    bfn.prototype = self.prototype;
-    fn.prototype = new bfn();
-
-    return fn;
-}
-
-function myApply(context) {
-    context = context || window;
-    const fn = Symbol('fn');
-    const args = [...arguments].slice(1);
-    context[fn] = this;
-    const result = context[fn](...args);
-    delete context[fn];
-    return result;
-}
-
-function fn(a,b) {
-    console.log(a,b);
-}
-fn.apply(null, [1,2])
-
-  const array = [{
-     "id": 0,
-     "name": "根节点"
-   },
-   {
-     "id": 2,
-     "name": "第一级1",
-     "pid": 0
-   },
-   {
-     "id": 3,
-     "name": "第二级1",
-     "pid": 2
-   },
-   {
-     "id": 1,
-     "name": "第一级1",
-     "pid": 0
-   },
-   {
-     "id": 6,
-     "name": "第三级2",
-     "pid": 3
-   },
- ];
-
- function fn(arr) {
+    const map = new Map();
     let result = {};
-    let map = new Map();
-
-    for (let cur of arr) {
-        map.set(cur.id, cur)
-    }
     const len = arr.length;
-    for(let i = 0;i<len;i++) {
-        if (map.has(arr[i].pid)) {
-            const parent = map.get(arr[i].pid);
+    for (let i = 0; i<len;i++) {
+        map.set(arr[i].id, arr[i])
+    }
+    for (let i = 0; i<len;i++) {
+        const parent = map.get(arr[i].pid);
+        if (parent) {
             if (!parent.children) {
-                parent.children =  [];
+                parent.children = []
             }
-            parent.children.push(arr[i]);
+            parent.children.push(arr[i])
         } else {
             result = arr[i];
         }
     }
-    return result;
- }
 
- console.log(fn(array));
+    return result;
+}
+
+console.log(fn(array))
 
 ```
-
-
-
-
-
-

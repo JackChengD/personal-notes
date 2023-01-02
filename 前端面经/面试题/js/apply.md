@@ -5,10 +5,10 @@ fn.apply(obj, args);
 ```js
     const myApply = function(context) {
         context = context || window;
-        var fn = Symbol(context);
+        const fn = Symbol(context);
         context[fn] = this;
-        var args = [...arguments[1]];
-        var result = context[fn](...args);
+        const args = [...arguments[1]];
+        const result = context[fn](...args);
         delete context[fn];
         return result;
     }
