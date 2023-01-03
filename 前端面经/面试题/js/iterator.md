@@ -13,7 +13,6 @@ function createIterator (items) {
                 done,
                 value,
             }
-            
         }
     }
 }

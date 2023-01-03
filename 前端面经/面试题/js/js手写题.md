@@ -19,7 +19,6 @@ console.log(isArray([]));
 const myMap = function(fn, context) {
     let arr = Array.prototype.slice.call(this);
     let mapArr = new Array();
-    console.log('context', context)
     for(let i = 0, len = arr.length; i < len; i++) {
         if (!arr.hasOwnProperty(i)) {
             continue;

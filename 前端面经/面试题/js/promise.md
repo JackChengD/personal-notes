@@ -8,7 +8,7 @@
 4、一般来说，建议不要在then中定义rejected状态的回调函数，应该使用catch方法代替,这样可以处理 Promise 内部发生的错误。catch方法返回的还是一个 Promise 对象，因此后面还可以接着调用then方法。
 5、race和all都是竞速函数，all结束的时间取决与那个最慢，其作为参数的Promise函数一旦有一个状态为rejected，则总的Promise的状态就为rejected；而race结束的时间取决于最快的那个，一旦最快的那个Promise状态发生改变，那么其总的Promise的状态就变成响应的状态，其余的参数Promise还是会继续进行  
 
-为什么常说promise是微任务，其实它有可能是宏任务的，因为promise的异步任务是通过asap这个库实现的，在这个库里面我们可以看到首先是使用setImmediate的，但是这个库只有IE110以上或者之前的EDGE才支持，所以会做兼容降级处理，导致使用process.nextTick，所以是微任务。
+为什么常说promise是微任务，其实它有可能是宏任务的，因为promise的异步任务是通过asap这个库实现的，在这个库里面我们可以看到首先是使用setImmediate的，但是这个方法只有IE110以上或者之前的EDGE才支持，所以会做兼容降级处理，导致使用process.nextTick，所以是微任务。
 
 参考promise源码：https://github.com/then/promise/blob/91b7b4cb6a/src/core.js  
 参考asap源码：https://github.com/kriskowal/asap/blob/db80ac173dbf74695ebb420f7873fe71bcb86f77/raw.js#L72  
