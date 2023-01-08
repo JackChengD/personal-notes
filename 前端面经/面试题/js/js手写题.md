@@ -460,33 +460,4 @@ function myAsync(generatorFunc) {
     }
 }
 
-
-function myAsync (genFn) {
-    return function () {
-        const gen = genFn.apply(this, [...arguments])
-        return new Promise((resolve, reject) => {
-            function step(key, args) {
-                let genResult;
-                try {
-                    genResult = gen[key](args);
-                } catch(error) {
-                    reject(error)
-                }
-                const { done, value } = genResult;
-                if (done) {
-                    resolve(value);
-                } else {
-                    Promise.resolve(value)
-                        .then(res => step('next', res))
-                        .catch(error => step('throw', error));
-                }
-            }
-
-
-            step('next');
-        })
-    }
-}
-
-
 ```

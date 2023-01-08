@@ -5,7 +5,7 @@ bind方法会创建一个新函数，当这个新函数被调用时，bind的一
 
 ```js
     function myBind(context) {
-        var self = this;
+        let self = this;
         let args = [...arguments].slice(1);
         function fn() {
             let brgs = [...arguments];
@@ -13,7 +13,7 @@ bind方法会创建一个新函数，当这个新函数被调用时，bind的一
             // 当作为普通函数时，this 指向 window，self 指向绑定函数，此时结果为 false，当结果为 false 的时候，this 指向绑定的 context。
             self.apply(this instanceof self ? this : context, args.concat(brgs));
         };
-        var bfn = function() {}
+        let bfn = function() {}
         bfn.prototype = this.prototype;
         fn.prototype = new bfn();
         return fn;

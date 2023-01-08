@@ -157,7 +157,7 @@ const myCall = function(context) {
     context= context || window;
     let fn = Symbol(context);
     context[fn] = this;
-    let args = [...arguments].slice(1);
+    let args = [...arguments[1]];
     let result = context[fn](...args);
     delete comtext[fn];
     return result;

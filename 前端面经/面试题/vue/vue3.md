@@ -15,17 +15,17 @@ vue3使用Proxy实现响应式，使用bucket（桶）存储副作用函数（ef
 const bucket = new Set();
 const data = { text: 'hello world' };
 const obj = new Proxy(data, {
-get(target, key) {
-    console.log('获取值时添加副作用函数')
-    bucket.add(effect);
-    return target[key];
-},
-set(target, key, newVal) {
-    console.log('设置值时执行副作用函数')
-    target[key] = newVal;
-    bucket.forEach(fn => fn());
-    return true;
-}
+    get(target, key) {
+        console.log('获取值时添加副作用函数')
+        bucket.add(effect);
+        return target[key];
+    },
+    set(target, key, newVal) {
+        console.log('设置值时执行副作用函数')
+        target[key] = newVal;
+        bucket.forEach(fn => fn());
+        return true;
+    }
 })
 
 function effect() {

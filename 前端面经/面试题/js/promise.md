@@ -21,8 +21,8 @@
 ```js
     Promise.myAll = function (promises) {
         return new Promise((resolve, reject)=>{
-            var result = [];
-            var len = promises.length;
+            let result = [];
+            let len = promises.length;
             for(let i=0;i<len;i++) {
                 Promise.resolve(promises[i]).then(res => {
                     result.push(res);
@@ -35,10 +35,10 @@
             }
         });
     }
-    var p1 = Promise.resolve(1);
-    var p2 = Promise.resolve(2);
-    var p3 = Promise.resolve(3);
-    var promises = [p1, p2, p3];
+    let p1 = Promise.resolve(1);
+    let p2 = Promise.resolve(2);
+    let p3 = Promise.resolve(3);
+    let promises = [p1, p2, p3];
     console.log(Promise.myAll(promises).then(res => {
         console.log(res)
     }))
@@ -58,23 +58,23 @@
             })
         })
     }
-    var p1 = new Promise((resolve)=>{
+    let p1 = new Promise((resolve)=>{
       setTimeout(()=>{
         console.log('1s');//1s后输出
         resolve(1)
       }, 1000)
     })
-    var p2 = new Promise((resolve)=>{
+    let p2 = new Promise((resolve)=>{
       setTimeout(()=>{
         resolve('2s');
       },2000)
     })
-    var p3 = new Promise((resolve)=>{
+    let p3 = new Promise((resolve)=>{
       setTimeout(()=>{
         resolve('5s');
       },5000)
     });
-    var promises = [p1, p2, p3];
+    let promises = [p1, p2, p3];
     console.log(Promise.myRace(promises));
 ```
 
