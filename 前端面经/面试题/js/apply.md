@@ -8,7 +8,7 @@ fn.apply(obj, args);
         const fn = Symbol(context);
         context[fn] = this;
         const args = [...arguments[1]];
-        const result = context[fn](...args);
+        const result = context[fn](args);
         delete context[fn];
         return result;
     }

@@ -147,7 +147,7 @@ const myApply = function(context) {
     context = context || window;
     var fn = Symbol(context);
     context[fn] = this;
-    var args = [...arguments].slice(1);
+    var args = [...arguments[1]];
     var result = context[fn](...args);
     delete context[fn];
     return result;
@@ -157,7 +157,7 @@ const myCall = function(context) {
     context= context || window;
     let fn = Symbol(context);
     context[fn] = this;
-    let args = [...arguments[1]];
+    let args = [...arguments].slice(1);
     let result = context[fn](...args);
     delete comtext[fn];
     return result;
