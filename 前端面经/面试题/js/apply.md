@@ -8,7 +8,7 @@ fn.apply(obj, args);
         const fn = Symbol(context);
         context[fn] = this;
         const args = [...arguments[1]];
-        const result = context[fn](args);
+        const result = context[fn](...args);
         delete context[fn];
         return result;
     }
@@ -18,4 +18,6 @@ fn.apply(obj, args);
         console.log(source)
     }
     fn.myApply(obj, [1, 2, 3]);
+
 ```
+
