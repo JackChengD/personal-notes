@@ -115,15 +115,15 @@ const debounce = function(fn, delay = 1000) {
 }
 
 const throttle = function(fn, delay = 1000) {
-    let flag = true;
+    let pedding = false;
     return function() {
-        if(!flag) return;
-        flag = false;
+        if(pedding) return;
+        pedding = true;
         let self =this;
         let args = [...arguments];
         setTimeout(()=>{
             fn.apply(self, args);
-            flag = true;
+            pedding = false;
         }, delay);
     }
 }
